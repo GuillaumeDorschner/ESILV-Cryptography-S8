@@ -1,0 +1,33 @@
+name: Release Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Part 1 - Storage/docker-compose.yml'
+      - 'Part 1 - Storage/example.env'
+      - 'Part 1 - Storage/init.sql'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release Package
+        run: |
+          mkdir release
+          cp Part\ 1\ -\ Storage/example.env release/
+          cp Part\ 1\ -\ Storage/init.sql release/
+          cp Part\ 1\ -\ Storage/docker-compose.yml release/
+          cd release
+          zip -r release_package_part1.zip .
+
+      - name: Upload Release Package
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-package-part1
+          path: release/release_package_part1.zip

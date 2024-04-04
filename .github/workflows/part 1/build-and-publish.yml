@@ -1,0 +1,34 @@
+name: Build and Publish to GHCR
+
+on:
+  push:
+    paths:
+      - 'Part 1 - Storage/**'
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to the GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./Part 1 - Storage
+          file: ./Part 1 - Storage/Dockerfile
+          push: true
+          tags: ghcr.io/guillaumedorschner/part-one-server-flask:latest
