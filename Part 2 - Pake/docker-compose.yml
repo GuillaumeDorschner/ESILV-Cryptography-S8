@@ -1,22 +1,21 @@
 version: '3'
 services:
 
-  # server:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.server
-  #   ports:
-  #     - "80:80"
-  #   depends_on:
-  #     - db
-  # client:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.client
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - server
+  server:
+    image: ghcr.io/guillaumedorschner/part-two-server:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+  client:
+    image: ghcr.io/guillaumedorschner/part-two-client:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    # interactive mode
+    stdin_open: true
+    tty: true
   db:
     image: postgres
     restart: always

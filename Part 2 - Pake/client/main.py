@@ -1,5 +1,5 @@
-from .utils import SignUp, Login
+from utils import Login, SignUp
 
-SignUp() 
-print ("entering login phase :")
+SignUp()
+print("entering login phase :")
 shared_key = Login()
