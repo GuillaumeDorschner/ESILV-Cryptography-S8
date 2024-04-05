@@ -31,7 +31,12 @@ jobs:
         with:
           name: release-package-part1
           path: release/Part-one-storage.zip
-  
+
+      # Generate a random tag name and output it
+      - name: Generate random tag name
+        id: random_tag
+        run: echo "RANDOM_TAG=$(date +%Y%m%d%H%M%S)-${GITHUB_RUN_ID}" >> $GITHUB_ENV
+      
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -40,8 +45,8 @@ jobs:
           # Setting --> Actions --> General --> Workflow permissions: Read and write permissions
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "v1.0.0"
-          release_name: Release for commit ${{ github.sha }}
+          tag_name: ${{ env.RANDOM_TAG }}
+          release_name: Release for ${{ env.RANDOM_TAG }}
           draft: false
           prerelease: false
 
