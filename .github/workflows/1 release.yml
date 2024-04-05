@@ -24,10 +24,33 @@ jobs:
           cp Part\ 1\ -\ Storage/init.sql release/
           cp Part\ 1\ -\ Storage/docker-compose.yml release/
           cd release
-          zip -r release_package_part1.zip .
+          zip -r Part-one-storage.zip .
 
       - name: Upload Release Package
         uses: actions/upload-artifact@v2
         with:
           name: release-package-part1
-          path: release/release_package_part1.zip
+          path: release/Part-one-storage.zip
+  
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          # GITHUB_TOKEN needed to allow read and write access
+          # Setting --> Actions --> General --> Workflow permissions: Read and write permissions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v1.0.0"
+          release_name: Release for commit ${{ github.sha }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release/Part-one-storage.zip
+          asset_name: Part-one-storage.zip
+          asset_content_type: application/zip
