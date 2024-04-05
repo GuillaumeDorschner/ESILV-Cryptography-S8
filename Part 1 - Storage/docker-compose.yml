@@ -13,6 +13,7 @@ services:
       - 5432:5432
     network_mode: "bridge"
 
+  # s
   server:
     image: ghcr.io/guillaumedorschner/part-one-server-flask:latest
     restart: always
