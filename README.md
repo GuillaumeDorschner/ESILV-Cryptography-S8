@@ -2,7 +2,6 @@
     <img src="https://avatars.githubusercontent.com/u/44686652?v=4" height=100 style="align-self: center;">
     <img alt="image" src="https://github.com/GuillaumeDorschner/ESILV-Cryptography-S8-1/assets/44686652/43f3aba2-7fcc-46a9-b818-73c2ad932501" height=100 style="align-self: center;">
     <div style="padding: 20px; text-align: center;">
-        <h3 style="font-size: 16px;">Project CryptoGraphie - 2</h3>
         <h3 style="font-size: 16px;">Guillaume Dorschner & Jules Deleuse</h3>
         <h3 style="font-size: 16px;">A4 - CCC</h3>
     </div>
