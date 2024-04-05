@@ -24,10 +24,31 @@ jobs:
           cp Part\ 2\ -\ Pake/init.sql release/
           cp Part\ 2\ -\ Pake/docker-compose.yml release/
           cd release
-          zip -r release_package_part2.zip .
+          zip -r Part-two-PAKE.zip .
 
       - name: Upload Release Package
         uses: actions/upload-artifact@v2
         with:
           name: release-package-part2
-          path: release/release_package_part2.zip
+          path: release/Part-two-PAKE.zip
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release for ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release/Part-two-PAKE.zip
+          asset_name: Part-two-PAKE.zip
+          asset_content_type: application/zip
