@@ -22,22 +22,20 @@ The second part of your project involves Password-Authenticated Key Exchange (PA
 
 ## Installation
 
-> [!WARNING]
-> For running the project locally in an easier-to-debug manner, follow the order below. In the future, we will use Docker-compose for project execution. Respect the following order:
-> 1. docker compose up
->    ```bash
->     docker compose up
->     ```
-> 2. run docker image (tmux split in client / server)
->    ```bash
->     docker-compose exec -it clientServer /bin/bash -c "/orchestrator/entrypoint.sh"
->     ```
-
 We use docker to run the application for simplicity. You can install docker from [here](https://docs.docker.com/get-docker/).
-
 1. Download docker on your computer
 2. Download the [release](https://github.com/GuillaumeDorschner/ESILV-Cryptography-S8/releases) of the project
 3. Change the example.env to .env and fill in the environment variables. Then run the following command to start the application:
+
+Run the services, respect the following order:
+1. docker compose up
+   ```bash
+    docker compose up
+    ```
+2. run docker image (tmux split in client / server)
+   ```bash
+    docker-compose exec -it clientServer /bin/bash -c "/orchestrator/entrypoint.sh"
+    ```
 
 [Here](./documentation.md) the documentation of the EndPoint API.
 
