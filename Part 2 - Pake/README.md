@@ -36,6 +36,9 @@ Run the services, respect the following order:
    ```bash
     docker-compose exec -it clientServer /bin/bash -c "/orchestrator/entrypoint.sh"
     ```
+> [!TIP]
+> for a better experience open your terminal wide this will be much more vthis will be much more readable.
+
 
 [Here](./documentation.md) the documentation of the EndPoint API.
 
