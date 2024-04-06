@@ -36,7 +36,7 @@ The second part of your project involves Password-Authenticated Key Exchange (PA
 We use docker to run the application for simplicity. You can install docker from [here](https://docs.docker.com/get-docker/).
 
 1. Download docker on your computer
-2. Download the [release](https://github.com/GuillaumeDorschner/ESILV-Cryptography-S8/releases/latest) of the project
+2. Download the [release](https://github.com/GuillaumeDorschner/ESILV-Cryptography-S8/releases) of the project
 3. Change the example.env to .env and fill in the environment variables. Then run the following command to start the application:
 
 [Here](./documentation.md) the documentation of the EndPoint API.
