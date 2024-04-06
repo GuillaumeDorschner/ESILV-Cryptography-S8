@@ -28,13 +28,9 @@ The second part of your project involves Password-Authenticated Key Exchange (PA
 >    ```bash
 >     docker compose up
 >     ```
-> 2. terminal 2
+> 2. run docker image (tmux split in client / server)
 >    ```bash
->     flask run --host=0.0.0.0 --port=80
->     ```
-> 3. terminal 1
->    ```bash
->     python -m client.main
+>     docker-compose exec -it clientServer /bin/bash -c "/orchestrator/entrypoint.sh"
 >     ```
 
 We use docker to run the application for simplicity. You can install docker from [here](https://docs.docker.com/get-docker/).
