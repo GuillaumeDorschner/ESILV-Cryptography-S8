@@ -1,4 +1,5 @@
 import pytermgui as ptg
+from .utils import SignUp, Login
 
 CONFIG = """
 config:
@@ -37,7 +38,22 @@ def showDialog(manager, title, content):
     manager.focus(modal)
 
 
+def display_result(manager, result):
+    content_lines = []
+
+    title = f"{result.get('operation')} {'SUCCESSFUL' if result.get('success') else 'FAILED'}"
+
+    for key, value in result.items():
+        content_lines.append(f"[bold]{key}: [/]{value}")
+
+    content = "\n".join(content_lines)
+
+    showDialog(manager, title, content)
+
+
 def login(manager):
+    for window in manager._windows:
+        window.close()
     fields = {
         "Username": ptg.InputField("Username: ", placeholder="Username"),
         "Password": ptg.InputField(
@@ -46,17 +62,18 @@ def login(manager):
     }
 
     def handle_login(*_):
-        username = fields["Username"].value
-        password = fields["Password"].value
+        try:
+            username = fields["Username"].value
+            password = fields["Password"].value
 
-        # Code for login
+            if not username or not password:
+                raise ValueError("Username and password cannot be empty.")
 
-        if username == "user" and password == "pass":
-            showDialog(
-                manager, "Login Success", "C: ValueXYZ\nEnvelope Contents: {...}\n"
-            )
-        else:
-            showDialog(manager, "Login Failed", "Invalid username or password.")
+            data = Login(username, password)
+
+            display_result(manager, data)
+        except Exception as e:
+            showDialog(manager, "Login Failed", "error: " + str(e) + " occurred.")
 
     login_window = ptg.Window(
         "[bold]Login[/bold]",
@@ -66,12 +83,14 @@ def login(manager):
         box=ptg.boxes.SINGLE,
         width=40,
     )
-
+    manager.layout.add_slot("Body")
     manager.add(login_window.center())
     manager.focus(login_window)
 
 
 def signup(manager):
+    for window in manager._windows:
+        window.close()
     fields = {
         "Username": ptg.InputField("Username: ", placeholder="Username"),
         "Password": ptg.InputField(
@@ -80,9 +99,18 @@ def signup(manager):
     }
 
     def handle_signup(*_):
-        # Code for signup
+        try:
+            username = fields["Username"].value
+            password = fields["Password"].value
 
-        showDialog(manager, "Signup Success", "Shared Key: KeyXYZ")
+            data = SignUp()
+
+            if not username or not password:
+                raise ValueError("Username and password cannot be empty.")
+
+            display_result(manager, data)
+        except Exception as e:
+            showDialog(manager, "Signup Failed", "error: " + str(e) + " occurred.")
 
     signup_window = ptg.Window(
         "[bold]Signup[/bold]",
@@ -92,7 +120,7 @@ def signup(manager):
         box=ptg.boxes.SINGLE,
         width=40,
     )
-
+    manager.layout.add_slot("Body")
     manager.add(signup_window.center())
     manager.focus(signup_window)
 
@@ -100,6 +128,8 @@ def signup(manager):
 def main_menu(manager):
     for window in manager._windows:
         window.close()
+
+    manager.layout.add_slot("Body")
 
     menu = ptg.Window(
         ptg.Button("Login", onclick=lambda *_: login(manager)),

@@ -1,5 +1,4 @@
-from .utils import Login, SignUp
+from .tui import main
 
-SignUp()
-print("entering login phase :")
-shared_key = Login()
+if __name__ == "__main__":
+    main()
