@@ -1,4 +1,4 @@
-from utils import Login, SignUp
+from .utils import Login, SignUp
 
 SignUp()
 print("entering login phase :")
