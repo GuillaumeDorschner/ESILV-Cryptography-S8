@@ -30,7 +30,7 @@ We use docker to run the application for simplicity. You can install docker from
 Run the services, respect the following order:
 1. docker compose up
    ```bash
-    docker compose up
+    docker compose up -d
     ```
 2. run docker image (tmux split in client / server)
    ```bash
