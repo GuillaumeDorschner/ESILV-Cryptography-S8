@@ -112,14 +112,28 @@ def SignUp():
         headers = {"Content-Type": "application/json"}
 
         response = requests.post(url, data=data_json, headers=headers)
+
+        result = {"operation": "SignUp", "username": username, "C": C}
         if response.ok:
-            print("Signup request, step 2, was successful.")
-            print("Response:", response.json())
-            return 1
+            response_data = response.json()
+            R = response_data.get("oprf")
+            result.update(
+                {
+                    "success": True,
+                    "R": r,
+                    "server_public_key": response_data.get("server_public_key"),
+                    "message": "SignUp successful.",
+                }
+            )
         else:
-            print("Signup request failed.")
-            print("Status Code:", response.status_code)
-            print("Response:", response.text)
+            result.update(
+                {
+                    "success": False,
+                    "message": f"SignUp failed. Reason: {response.reason}",
+                }
+            )
+
+        return result
 
 
 def Login():
@@ -207,11 +221,10 @@ def Login():
     print("Private Key type:", type(C_priv_key))
     print("Public Key type:", type(S_pub_key))
 
-    
-    shared_key = create_shared_key(C_priv_key,S_pub_key)
-    print (shared_key)
+    shared_key = create_shared_key(C_priv_key, S_pub_key)
+    print(shared_key)
 
-    print ("INFO : initiating AKE")
+    print("INFO : initiating AKE")
 
     server_url = "http://localhost:8080"
     signup_route = "/AKE"
@@ -225,20 +238,28 @@ def Login():
     headers = {"Content-Type": "application/json"}
 
     response = requests.post(url, data=data_json, headers=headers)
+
+    result = {"operation": "Login", "username": username, "C": C}
     if response.ok:
-        data = response.json()
-
-        print("INFO : AKE successfuly initiated")
-
+        response_data = response.json()
+        result.update(
+            {
+                "success": True,
+                "R": r,
+                "server_public_key": response_data.get("server_public_key"),
+                "message": "Login successful.",
+            }
+        )
     else:
-        print("AKE request failed.")
-        print("Status Code:", response.status_code)
-        print("Response:", response.text)
+        result.update(
+            {
+                "success": False,
+                "message": f"Login failed. Reason: {response.reason}",
+            }
+        )
 
-        Exception("AKE request failed.")
-    print("We wished we had more time to implement hashing and signing the shared key.")
-    #
-    
+    return result
+
 
 def computeOPRF(R, S_pub_key_bytes):
     global nonce
